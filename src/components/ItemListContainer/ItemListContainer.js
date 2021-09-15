@@ -1,6 +1,6 @@
 import React from 'react'
 import useStyles from './styles'
-import ItemCount from '../ItemCount/ItemCount'
+
 import ItemList from '../ItemList/ItemList'
 
 
@@ -10,9 +10,9 @@ const ItemListContainer = (props) => {
         <main  className={classes.content}> 
          <div className={classes.toolbar} />
        
-        {/* {props.greeting}  */}
+      
         <ItemList/>
-        <ItemCount stock= {5} initial= {1}/>
+       
         
 
         </main>
