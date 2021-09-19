@@ -1,19 +1,24 @@
 import React from "react";
 import { useState } from "react";
+
 import { Button, Typography } from "@material-ui/core";
 import useStyles from "./styles.js";
 
+//COMPONENTE
 const ItemCount = ({ stock, initial }) => {
   const [count, setCount] = useState(initial);
   const classes = useStyles();
 
+  //Suma 1 al carrito
   const add = () => {
     if (count < stock) setCount(count + 1);
   };
 
+  //Resta 1 al carrito
   const subtract = () => {
     if (count > initial) setCount(count - 1);
   };
+
 
   return (
     <div>

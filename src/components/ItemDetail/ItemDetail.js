@@ -1,4 +1,5 @@
 import React from "react";
+
 import useStyles from "./styles";
 import {
   Card,
@@ -7,14 +8,16 @@ import {
   CardActions,
   Typography,
 } from "@material-ui/core";
+
 import ItemCount from "../ItemCount/ItemCount";
 
+//COMPONENTE
 const ItemDetail = ({ itemDetail }) => {
   const classes = useStyles();
 
   return (
     <main className={classes.content}>
-      <Grid container justify="center" spacing={4}>
+      <Grid container justifyContent="center" spacing={4}>
         <Card className={classes.root}>
           <CardContent>
             <div className={classes.cardContent}>
@@ -23,7 +26,7 @@ const ItemDetail = ({ itemDetail }) => {
               </Typography>
               <Typography variant="h5">{itemDetail.price}</Typography>
             </div>
-            <Grid container justify="center" spacing={4}>
+            <Grid container justifyContent="center" spacing={4}>
               <img src={itemDetail.pictureUrl} alt="" />
             </Grid>
             <Typography variant="body2" color="textSecondary">

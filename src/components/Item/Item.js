@@ -1,12 +1,19 @@
 import React from "react";
+
 import { Card, CardMedia, CardContent, Typography } from "@material-ui/core";
 import useStyles from "./styles";
 
+
+//COMPONENTE
 const Item = ({ item }) => {
+
   const classes = useStyles();
 
+ 
+
   return (
-    <Card className={classes.root}>
+   
+    <Card className={classes.root} >
       <CardMedia
         className={classes.media}
         image={item.pictureUrl}
