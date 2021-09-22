@@ -1,3 +1,4 @@
+import { Typography } from "@material-ui/core";
 import React from "react";
 import useStyles from "./styles";
 
@@ -6,7 +7,7 @@ const Carrito = () => {
   return (
     <>
       <div className={classes.toolbar} />
-      <h1> Y esta tampoco 💩 </h1>
+      <Typography variant="h4"> Carrito en construcción 😬  </Typography>
     </>
   );
 };

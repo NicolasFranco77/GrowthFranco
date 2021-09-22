@@ -29,7 +29,7 @@ function App() {
             <ItemDetailContainer />
           </Route>
 
-          <Route path="/carrito">
+          <Route path="/cart">
             <Carrito />
           </Route>
         </Switch>

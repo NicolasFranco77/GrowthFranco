@@ -61,8 +61,8 @@ const Navbar = ({ totalItems }) => {
           </NavLink>
 
           <div className={classes.button} />
-          <NavLink
-            to="/carrito"
+          <NavLink 
+            to="/cart"
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <CartWidget />
