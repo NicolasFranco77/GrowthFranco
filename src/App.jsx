@@ -1,39 +1,39 @@
 import React from "react";
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import { CartContextProvider } from "./components/Context/CartContext";
+
+import Cart from "./components/views/Cart/Cart";
 import Navbar from "./components/Navbar/Navbar";
 import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
-import Contacto from "./components/views/Contacto";
-import Carrito from "./components/views/Carrito";
 
 function App() {
   return (
     <>
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path="/">
-            <ItemListContainer />
-          </Route>
+      <CartContextProvider>
+        <Router>
+          <Navbar />
+          <Switch>
+            <Route exact path="/">
+              <ItemListContainer />
+            </Route>
 
-          <Route path="/category/:category">
-            <ItemListContainer />
-          </Route>
+            <Route path="/category/:category">
+              <ItemListContainer />
+            </Route>
 
-          <Route path="/contacto">
-            <Contacto />
-          </Route>
+            <Route path="/item/:title">
+              <ItemDetailContainer />
+            </Route>
 
-          <Route path="/item/:title">
-            <ItemDetailContainer />
-          </Route>
-
-          <Route path="/cart">
-            <Carrito />
-          </Route>
-        </Switch>
-      </Router>
+            <Route path="/cart">
+              <Cart />
+            </Route>
+          </Switch>
+        </Router>
+      </CartContextProvider>
     </>
   );
 }

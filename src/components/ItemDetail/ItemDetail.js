@@ -1,6 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { CartContext } from "../Context/CartContext";
 
 import useStyles from "./styles";
 import {
@@ -16,20 +17,20 @@ import ItemCount from "../ItemCount/ItemCount";
 
 //COMPONENTE
 const ItemDetail = ({ itemDetail }) => {
+  const { quantity, addItem, isInCart } = useContext(CartContext);
   const [cart, setCart] = useState(true);
-  const [quantity, setQuantity] = useState();
+  const [itemCount, setItemCount] = useState();
+
   const classes = useStyles();
 
   //Desaparece el contador
+
   const handleOnAdd = () => {
     setCart(false);
-    console.log(quantity)
   };
 
-  
   //Componente condicional
   const FinalizarCompra = () => {
-
     //Aparece el carritto
     const handleOnClick = () => {
       setCart(true);
@@ -48,8 +49,8 @@ const ItemDetail = ({ itemDetail }) => {
       </>
     );
   };
-  
-//RETURN DEL COMPONENTE PRINCIPAL
+
+  //RETURN DEL COMPONENTE PRINCIPAL
   return (
     <main className={classes.content}>
       <Grid container justifyContent="center" spacing={4}>
@@ -73,9 +74,10 @@ const ItemDetail = ({ itemDetail }) => {
             {cart ? (
               <ItemCount
                 stock={5}
-                initial={1}
+                item={itemDetail}
+                initial={0}
                 onAdd={handleOnAdd}
-                setQuantity={setQuantity}
+                setItemCount={setItemCount}
               />
             ) : (
               <FinalizarCompra />

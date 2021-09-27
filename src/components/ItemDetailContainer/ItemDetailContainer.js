@@ -25,38 +25,66 @@ const ItemDetailContainer = () => {
           title: "Whey Protein Cutter",
           description:
             '100% Whey protein con el agregado del potente CLA Acido Linoleico Conjugado (sigla en inglés) (potente quemador de grasa y reductor del colesterol malo) Sabores cremosos con textura American Style registrados SPX Hay Stock de Vainilla, Chocolate imperial o Frutilla, si elige varios puede pedir la opción "surtidos" en el selector de sabor y avisar INMEDIATAMENTE DESPUÉS DE COMPRAR los sabores por mensaje interno (no whatsapp sino mensaje interno desde la misma compra)',
-          price: "$1500",
+          price: "1500",
           pictureUrl:
-            "https://http2.mlstatic.com/D_NQ_NP_898406-MLA43344494942_092020-O.webp",
+            "https://i.ibb.co/TBJpHqw/3f.png",
         },
         {
           id: "02",
           title: "Whey Pro 2.0",
           description: "Nutrilab",
-          price: "$1400",
+          price: "1400",
           pictureUrl:
-            "https://http2.mlstatic.com/D_NQ_NP_649385-MLA43464749729_092020-O.webp",
+            "https://i.ibb.co/3dNpg0J/2f.png",
         },
         {
           id: "03",
           title: "True Made Whey Protein",
           description: "ENA Sport",
-          price: "$5800",
+          price: "5800",
           pictureUrl:
-            "https://http2.mlstatic.com/D_NQ_NP_732415-MLA46275367315_062021-O.webp",
+            "https://i.ibb.co/bNhB5Fj/f1.png",
         },
         {
           id: "04",
           title: "Advance Whey Proteina",
           description: "Xtrenght",
-          price: "$2251",
+          price: "2251",
           pictureUrl:
-            "https://http2.mlstatic.com/D_NQ_NP_909867-MLA42152644948_062020-O.webp",
+            "https://i.ibb.co/NnVvQjq/4f.png",
+        },
+        {
+          id: "05",
+          title: "Shaker Gold",
+          description: "Gold Nutrition",
+          price: "500",
+          pictureUrl: "https://i.ibb.co/TqYGC4G/1-final.png",
+        },
+        {
+          id: "06",
+          title: "Shaker Pink",
+          description: "BSX Nutrition",
+          price: "350",
+          pictureUrl: "https://i.ibb.co/gy1w6cG/2final.png",
+        },
+        {
+          id: "07",
+          title: "Shaker Gentech ",
+          description: "Gentech",
+          price: "995",
+          pictureUrl: "https://i.ibb.co/KXhC6TL/5.png",
+        },
+        {
+          id: "08",
+          title: "Shaker Plus Ena  ",
+          description: "ENA Sport",
+          price: "690",
+          pictureUrl: "https://i.ibb.co/KFQT3Wd/77777.png",
         },
       ];
       setTimeout(() => {
         resolve(products);
-      }, 2000);
+      }, 0);
     });
   };
 
@@ -85,7 +113,7 @@ const ItemDetailContainer = () => {
   }
 
   return (
-    <main >
+    <main>
       <div className={classes.toolbar} />
       <ItemDetail itemDetail={itemDetail} />
     </main>

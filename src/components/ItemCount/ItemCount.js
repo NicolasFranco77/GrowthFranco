@@ -1,24 +1,26 @@
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useContext } from "react";
+import { CartContext } from "../Context/CartContext.js";
 
 import { Button, Typography } from "@material-ui/core";
 import useStyles from "./styles.js";
 
 //COMPONENTE
-const ItemCount = ({ stock, initial, setQuantity, onAdd }) => {
+const ItemCount = ({ stock, initial, onAdd, setItemCount, item }) => {
   const [count, setCount] = useState(initial);
+  const { quantity, changeQuantity, addItem, productsCart, setProductsCart } =
+    useContext(CartContext);
+
   const classes = useStyles();
 
-  //Quantity es igual a Count
-  useEffect(() => {
-    setQuantity(count);
-  }, [count]);
+  setItemCount(count);
 
   //Suma 1 al carrito
   const add = () => {
     if (count < stock) {
       setCount(count + 1);
+      changeQuantity(quantity + 1);
     }
   };
 
@@ -26,11 +28,38 @@ const ItemCount = ({ stock, initial, setQuantity, onAdd }) => {
   const subtract = () => {
     if (count > initial) {
       setCount(count - 1);
+      changeQuantity(quantity - 1);
     }
   };
 
   const handleOnClick = () => {
-    setQuantity(count);
+    const productsCartId = productsCart?.map(item=> item.id)
+
+  if (productsCartId?.includes(item.id)) {
+  const updateCart = productsCart?.map (i => {
+      if (i.id === item.id){
+     
+        let oldQuantity = i.quantity
+        return{
+          ...i,
+          quantity: count + oldQuantity
+        }
+      }else{
+        return i
+      }
+  })
+  setProductsCart(updateCart)
+  }  else{const newProduct = {
+    ...item,
+    quantity: count,
+  };
+
+  productsCart
+    ? addItem([...productsCart, newProduct])
+    : addItem([newProduct]);
+} 
+
+  
     onAdd();
   };
 

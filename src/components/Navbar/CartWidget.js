@@ -1,17 +1,25 @@
-import React from 'react'
-import {IconButton, Badge} from "@material-ui/core";
+import React, { useContext } from "react";
+import { IconButton, Badge } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
+import { CartContext } from "../Context/CartContext";
 
 const CartWidget = () => {
-    return (
-        
-           <IconButton to="/cart" aria-label="Show cart items" color="inherit">
-            <Badge badgeContent={1} color="secondary">
-              <ShoppingCart />
-            </Badge>
-          </IconButton> 
-    
-    )
-}
+  const { quantity } = useContext(CartContext);
+ 
 
-export default CartWidget
+
+
+
+
+
+
+  return (
+    <IconButton to="/cart" aria-label="Show cart items" color="inherit">
+      <Badge badgeContent={quantity} color="secondary">
+        <ShoppingCart />
+      </Badge>
+    </IconButton>
+  );
+};
+
+export default CartWidget;

@@ -17,7 +17,8 @@ const products = [
     title: "Whey Protein Cutter",
     description: "SPX Nutrition Max",
     price: "$1500",
-    category: "ofertas",
+    oferta: true,
+    category: "proteinas",
     pictureUrl: "https://i.ibb.co/TBJpHqw/3f.png",
   },
   {
@@ -26,13 +27,14 @@ const products = [
     description: "Nutrilab",
     price: "$1400",
     pictureUrl: "https://i.ibb.co/3dNpg0J/2f.png",
-    category: "ofertas",
+    category: "proteinas",
   },
   {
     id: "03",
     title: "True Made Whey Protein",
     description: "ENA Sport",
     price: "$5800",
+    category: "proteinas",
     pictureUrl: "https://i.ibb.co/bNhB5Fj/f1.png",
   },
 
@@ -41,14 +43,47 @@ const products = [
     title: "Advance Whey Proteina",
     description: "Xtrenght",
     price: "$2251",
+    category: "proteinas",
     pictureUrl: "https://i.ibb.co/NnVvQjq/4f.png",
+  },
+  {
+    id: "05",
+    title: "Shaker Gold",
+    description: "Gold Nutrition",
+    price: "$500",
+    category: "shakers",
+    pictureUrl: "https://i.ibb.co/TqYGC4G/1-final.png",
+  },
+  {
+    id: "06",
+    title: "Shaker Pink",
+    description: "BSX Nutrition",
+    price: "$350",
+    category: "shakers",
+    pictureUrl: "https://i.ibb.co/gy1w6cG/2final.png",
+  },
+  {
+    id: "07",
+    title: "Shaker Gentech ",
+    description: "Gentech",
+    price: "$995",
+    category: "shakers",
+    pictureUrl: "https://i.ibb.co/KXhC6TL/5.png",
+  },
+  {
+    id: "08",
+    title: "Shaker Plus Ena  ",
+    description: "ENA Sport",
+    price: "$690",
+    category: "shakers",
+    pictureUrl: "https://i.ibb.co/KFQT3Wd/77777.png",
   },
 ];
 
 // Retorna los productos en 2 segundos
 function getProductsList() {
   return new Promise((resolve, reject) => {
-    setTimeout(() => resolve(products), 2000);
+    setTimeout(() => resolve(products), 0);
   });
 }
 
@@ -58,26 +93,46 @@ const ItemListContainer = () => {
   const { category } = useParams();
   const classes = useStyles();
 
-  //Llamada al servidor
+//Renderiza las ofertas o todos los productos
+ useEffect(() => {
+
+  //Renderiza las ofertas
+  if (category === "ofertas" ) {
+    const products = getProductsList();
+
+    products.then((res) => {
+      const product = res.filter((item) => item.oferta);
+      setListProducts(product);
+      
+      
+    });
+    return () => {
+      setListProducts(undefined);
+    };
+  }
+  //Renderiza todos los productos
+  else {
+    const products = getProductsList();
+
+    products.then((list) => {
+      setListProducts(list);
+    });
+    return () => {
+      setListProducts(undefined);
+    };
+  }
+}, [category]);
+
+  
   useEffect(() => {
-    //Renderiza las ofertas
-    if (category) {
+    //Renderiza las categorías
+    if (category === "proteinas" || category === "shakers"  ) {
       const products = getProductsList();
 
       products.then((res) => {
-        const product = res.filter((item) => item.category === "ofertas");
+        const product = res.filter((item) => item.category === category);
+       
         setListProducts(product);
-      });
-      return () => {
-        setListProducts(undefined);
-      };
-    } 
-     //Renderiza todos los productos
-    else {
-      const products = getProductsList();
-
-      products.then((list) => {
-        setListProducts(list);
       });
       return () => {
         setListProducts(undefined);
@@ -86,7 +141,7 @@ const ItemListContainer = () => {
   }, [category]);
 
   //Spinner
-  if (listProducts === undefined || listProducts.length === 0  ) {
+  if (listProducts === undefined || listProducts.length === 0) {
     return (
       <>
         <div className={classes.toolbar} />
@@ -106,3 +161,5 @@ const ItemListContainer = () => {
 };
 
 export default ItemListContainer;
+
+

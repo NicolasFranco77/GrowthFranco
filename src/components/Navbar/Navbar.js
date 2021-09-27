@@ -1,6 +1,8 @@
 import React from "react";
-
 import { Link, NavLink } from "react-router-dom";
+
+
+
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import useStyles from "./styles";
 
@@ -11,6 +13,7 @@ import CartWidget from "./CartWidget";
 //COMPONENTE
 const Navbar = ({ totalItems }) => {
   const classes = useStyles();
+  
 
   return (
     <>
@@ -33,6 +36,15 @@ const Navbar = ({ totalItems }) => {
             </Typography>
           </Link>
           <div className={classes.grow} />
+          <NavLink to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            <Button
+              variant="text"
+              color="default"
+              className={classes.menuButton}
+            >
+              PRODUCTOS
+            </Button>
+          </NavLink>
           <NavLink
             to="/category/ofertas"
             activeClassName={classes.active}
@@ -47,8 +59,7 @@ const Navbar = ({ totalItems }) => {
             </Button>
           </NavLink>
           <NavLink
-            to="/contacto"
-            
+            to="/category/proteinas"
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <Button
@@ -56,12 +67,24 @@ const Navbar = ({ totalItems }) => {
               color="default"
               className={classes.menuButton}
             >
-              Contacto
+              PROTEÍNAS
+            </Button>
+          </NavLink>
+          <NavLink
+            to="/category/shakers"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Button
+              variant="text"
+              color="default"
+              className={classes.menuButton}
+            >
+              SHAKERS
             </Button>
           </NavLink>
 
           <div className={classes.button} />
-          <NavLink 
+          <NavLink
             to="/cart"
             style={{ textDecoration: "none", color: "inherit" }}
           >
