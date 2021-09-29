@@ -4,7 +4,7 @@ import { ShoppingCart } from "@material-ui/icons";
 import { CartContext } from "../Context/CartContext";
 
 const CartWidget = () => {
-  const { quantity } = useContext(CartContext);
+  const { navQuantity } = useContext(CartContext);
  
 
 
@@ -15,9 +15,10 @@ const CartWidget = () => {
 
   return (
     <IconButton to="/cart" aria-label="Show cart items" color="inherit">
-      <Badge badgeContent={quantity} color="secondary">
+      { navQuantity > 0 && <Badge badgeContent={navQuantity} color="secondary">
         <ShoppingCart />
-      </Badge>
+      </Badge>}
+     
     </IconButton>
   );
 };

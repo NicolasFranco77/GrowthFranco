@@ -1,36 +1,33 @@
-import React, {useContext, useState} from 'react'
+import React, { useContext, useState } from "react";
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import useStyles from "./styles";
 import { CartContext } from "../../Context/CartContext";
-import CartItem from "./CartItem/CartItem"
+import CartItem from "./CartItem/CartItem";
 
 const Cart = () => {
   const classes = useStyles();
-  const {productsCart}  = useContext(CartContext);
-  const {clear}  = useContext(CartContext);
-  const [cantidad, setCantidad] = useState()
+  const { productsCart } = useContext(CartContext);
+  const { clear } = useContext(CartContext);
+  const [cantidad, setCantidad] = useState();
 
+  const totalPrice = productsCart.map(
+    (itemCart) => itemCart.price * itemCart.quantity
+  );
 
-
-
+  let total = totalPrice.reduce((a, b) => a + b, 0);
 
   const FilledCart = () => (
     <>
       <Grid container spacing={3}>
         {productsCart?.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem
-              item={item}
-              setCantidad={setCantidad}
-            />
+            <CartItem item={item} setCantidad={setCantidad} />
           </Grid>
         ))}
       </Grid>
       <div className={classes.cardDetails}>
-        <Typography variant="h4">
-          Total: $ {cantidad} (en contrucción 😬 )
-        </Typography>
+        <Typography variant="h4">Total: ${total}</Typography>
         <div>
           <Button
             className={classes.emptyButton}
@@ -39,7 +36,6 @@ const Cart = () => {
             variant="contained"
             color="secondary"
             onClick={clear}
-            
           >
             Vaciar Carrito
           </Button>
@@ -51,7 +47,6 @@ const Cart = () => {
             type="button"
             variant="contained"
             color="primary"
-            
           >
             Pagar
           </Button>
@@ -60,11 +55,10 @@ const Cart = () => {
     </>
   );
 
-
   const EmptyCart = () => (
     <Typography variant="subtitle1">
-      Tu carrito está vacío,  
-       <Link to="/" className={classes.link}>
+      Tu carrito está vacío,
+      <Link to="/" className={classes.link}>
         agrega productos
       </Link>
       !
@@ -73,14 +67,13 @@ const Cart = () => {
 
   return (
     <Container>
-    <div className={classes.toolbar} />
-    <Typography className={classes.title} variant="h3" gutterBottom>
-      Carrito de Compras
-    </Typography>
-    {productsCart ? <FilledCart /> : <EmptyCart />  }
-    
-  </Container>
-  )
-}
+      <div className={classes.toolbar} />
+      <Typography className={classes.title} variant="h3" gutterBottom>
+        Carrito de Compras
+      </Typography>
+      {productsCart.length > 0 ? <FilledCart /> : <EmptyCart />}
+    </Container>
+  );
+};
 
-export default Cart
+export default Cart;

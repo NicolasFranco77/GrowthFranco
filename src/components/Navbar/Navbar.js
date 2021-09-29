@@ -11,7 +11,7 @@ import logo from "../../assets/commerce.png";
 import CartWidget from "./CartWidget";
 
 //COMPONENTE
-const Navbar = ({ totalItems }) => {
+const Navbar = () => {
   const classes = useStyles();
   
 

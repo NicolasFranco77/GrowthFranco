@@ -7,14 +7,18 @@ import { Button, Typography } from "@material-ui/core";
 import useStyles from "./styles.js";
 
 //COMPONENTE
-const ItemCount = ({ stock, initial, onAdd, setItemCount, item }) => {
+const ItemCount = ({ stock, initial, onAdd, item }) => {
   const [count, setCount] = useState(initial);
-  const { quantity, changeQuantity, addItem, productsCart, setProductsCart } =
-    useContext(CartContext);
+  const {
+    quantity,
+    changeQuantity,
+    addItem,
+    productsCart,
+    setProductsCart,
+    changeNavQuantity,
+  } = useContext(CartContext);
 
   const classes = useStyles();
-
-  setItemCount(count);
 
   //Suma 1 al carrito
   const add = () => {
@@ -33,34 +37,34 @@ const ItemCount = ({ stock, initial, onAdd, setItemCount, item }) => {
   };
 
   const handleOnClick = () => {
-    const productsCartId = productsCart?.map(item=> item.id)
+    const productsCartId = productsCart?.map((item) => item.id);
 
-  if (productsCartId?.includes(item.id)) {
-  const updateCart = productsCart?.map (i => {
-      if (i.id === item.id){
-     
-        let oldQuantity = i.quantity
-        return{
-          ...i,
-          quantity: count + oldQuantity
+    if (productsCartId?.includes(item.id)) {
+      const updateCart = productsCart?.map((i) => {
+        if (i.id === item.id) {
+          let oldQuantity = i.quantity;
+          return {
+            ...i,
+            quantity: count + oldQuantity,
+          };
+        } else {
+          return i;
         }
-      }else{
-        return i
-      }
-  })
-  setProductsCart(updateCart)
-  }  else{const newProduct = {
-    ...item,
-    quantity: count,
-  };
+      });
+      setProductsCart(updateCart);
+    } else {
+      const newProduct = {
+        ...item,
+        quantity: count,
+      };
 
-  productsCart
-    ? addItem([...productsCart, newProduct])
-    : addItem([newProduct]);
-} 
+      productsCart
+        ? addItem([...productsCart, newProduct])
+        : addItem([newProduct]);
+    }
 
-  
     onAdd();
+    changeNavQuantity(quantity);
   };
 
   return (

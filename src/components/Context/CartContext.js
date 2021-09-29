@@ -3,12 +3,19 @@ import { createContext, useState } from "react";
 export const CartContext = createContext();
 
 export const CartContextProvider = ({ children }) => {
-  const [productsCart, setProductsCart] = useState(undefined);
+  const [productsCart, setProductsCart] = useState([]);
   const [quantity, setQuantity] = useState(0);
+  const [navQuantity, setNavQuantity] = useState(0)
+
+
+
 
   const removeItem = (itemId) => {
     const newList = productsCart.filter((item) => item.id !== itemId);
     setProductsCart(newList);
+  };
+  const changeNavQuantity = (count) => {
+    setNavQuantity(count);
   };
 
   const changeQuantity = (count) => {
@@ -16,8 +23,10 @@ export const CartContextProvider = ({ children }) => {
   };
 
   const clear = () => {
-    setProductsCart(undefined);
+    setProductsCart([]);
     setQuantity(0);
+    setNavQuantity(0)
+
   };
 
   const addItem = (item, quantity) => {
@@ -34,6 +43,8 @@ export const CartContextProvider = ({ children }) => {
         quantity,
         removeItem,
         setProductsCart,
+        changeNavQuantity,
+        navQuantity
       }}
     >
       {children}
