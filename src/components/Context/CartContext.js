@@ -5,10 +5,9 @@ export const CartContext = createContext();
 export const CartContextProvider = ({ children }) => {
   const [productsCart, setProductsCart] = useState([]);
   const [quantity, setQuantity] = useState(0);
-  const [navQuantity, setNavQuantity] = useState(0)
+  const [navQuantity, setNavQuantity] = useState(0);
 
-
-
+  console.log(productsCart);
 
   const removeItem = (itemId) => {
     const newList = productsCart.filter((item) => item.id !== itemId);
@@ -25,8 +24,7 @@ export const CartContextProvider = ({ children }) => {
   const clear = () => {
     setProductsCart([]);
     setQuantity(0);
-    setNavQuantity(0)
-
+    setNavQuantity(0);
   };
 
   const addItem = (item, quantity) => {
@@ -44,7 +42,7 @@ export const CartContextProvider = ({ children }) => {
         removeItem,
         setProductsCart,
         changeNavQuantity,
-        navQuantity
+        navQuantity,
       }}
     >
       {children}

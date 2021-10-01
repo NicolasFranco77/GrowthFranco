@@ -18,6 +18,11 @@ export default makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
 
+  cardActions2: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+
 
   cardContent: {
     display: "flex",

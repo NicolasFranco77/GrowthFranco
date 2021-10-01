@@ -24,7 +24,7 @@ const Item = ({ item }) => {
           <Typography variant="h5" gutterBottom>
             {item.title}
           </Typography>
-          <Typography variant="h5">{item.price}</Typography>
+          <Typography variant="h5">${item.price}</Typography>
         </div>
         <Typography variant="body2" color="textSecondary">
           {item.description}

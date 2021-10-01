@@ -14,7 +14,7 @@ const ItemList = ({ listProducts }) => {
           <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
             <Link
               key={product.id}
-              to={`/item/${product.title}`}
+              to={`/item/${product.id}/${product.title}`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Item item={product} />

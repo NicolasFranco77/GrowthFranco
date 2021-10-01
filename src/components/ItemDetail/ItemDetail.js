@@ -32,20 +32,23 @@ const ItemDetail = ({ itemDetail }) => {
   //Componente condicional
   const FinalizarCompra = () => {
     //Aparece el carritto
-    const handleOnClick = () => {
-      setCart(true);
-    };
+   
+  
 
     return (
       <>
-        <Button onClick={handleOnClick} variant="contained">
-          Volver
+      <CardActions disableSpacing className={classes.cardActions2}>
+       <Link style={{ textDecoration: "none" }} to="/">
+        <Button  variant="contained" color="primary">
+          Seguir comprando
         </Button>
+        </Link>
         <Link style={{ textDecoration: "none" }} to="/cart">
           <Button variant="contained" color="secondary">
             Finalizar Compra
           </Button>
         </Link>
+        </CardActions>
       </>
     );
   };
@@ -60,18 +63,18 @@ const ItemDetail = ({ itemDetail }) => {
               <Typography variant="h5" gutterBottom>
                 {itemDetail.title}
               </Typography>
-              <Typography variant="h5">{itemDetail.price}</Typography>
+              <Typography variant="h5">${itemDetail.price}</Typography>
             </div>
             <Grid container justifyContent="center" spacing={4}>
               <img src={itemDetail.pictureUrl} alt="" />
             </Grid>
             <Typography variant="body2" color="textSecondary">
-              {itemDetail.description}
+              {itemDetail.longDescription}
             </Typography>
           </CardContent>
-
+          {cart ?
           <CardActions disableSpacing className={classes.cardActions}>
-            {cart ? (
+             
               <ItemCount
                 stock={5}
                 item={itemDetail}
@@ -79,10 +82,11 @@ const ItemDetail = ({ itemDetail }) => {
                 onAdd={handleOnAdd}
                 setItemCount={setItemCount}
               />
-            ) : (
+               </CardActions>
+             : 
               <FinalizarCompra />
-            )}
-          </CardActions>
+            }
+         
         </Card>
       </Grid>
     </main>
