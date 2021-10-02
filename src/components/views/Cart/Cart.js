@@ -1,15 +1,20 @@
-import React, { useContext, useState } from "react";
-import { Container, Typography, Button, Grid } from "@material-ui/core";
+import React, { useContext} from "react";
 import { Link } from "react-router-dom";
-import useStyles from "./styles";
 import { CartContext } from "../../Context/CartContext";
+/*--------------------Material UI--------------------*/
+import { Container, Typography, Button, Grid } from "@material-ui/core";
+import useStyles from "./styles";
+/*--------------------Material UI--------------------*/
+/*--------------------Components--------------------*/
 import CartItem from "./CartItem/CartItem";
+/*--------------------Components--------------------*/
+
+
 
 const Cart = () => {
   const classes = useStyles();
-  const { productsCart } = useContext(CartContext);
-  const { clear } = useContext(CartContext);
-  const [cantidad, setCantidad] = useState();
+  const { productsCart, clear } = useContext(CartContext);
+  
 
   const totalPrice = productsCart.map(
     (itemCart) => itemCart.price * itemCart.quantity
@@ -22,7 +27,9 @@ const Cart = () => {
       <Grid container spacing={3}>
         {productsCart?.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem item={item} setCantidad={setCantidad} />
+
+            <CartItem item={item}/>
+
           </Grid>
         ))}
       </Grid>
@@ -57,9 +64,9 @@ const Cart = () => {
 
   const EmptyCart = () => (
     <Typography variant="subtitle1">
-      Tu carrito está vacío,
+      Tu carrito está vacío,{" "}
       <Link to="/" className={classes.link}>
-        agrega productos
+        agrega productos 
       </Link>
       !
     </Typography>

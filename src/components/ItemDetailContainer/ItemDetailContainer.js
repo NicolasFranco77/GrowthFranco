@@ -1,48 +1,40 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { doc, getDoc } from "firebase/firestore";
 
+/*--------------------Components--------------------*/
 import ItemDetail from "../ItemDetail/ItemDetail";
+import Spinner from "../ConditionalComponents/Spinner/Spinner";
+/*--------------------Components--------------------*/
 
+/*--------------------Firebase--------------------*/
+import { getProductsById } from "../../services/firebase/firebase";
+/*--------------------Firebase--------------------*/
+
+/*--------------------Material UI--------------------*/
 import useStyles from "./styles";
-import { Grid } from "@material-ui/core";
+/*--------------------Material UI--------------------*/
 
-import { db } from "../../services/firebase/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
 
-//Spinner
-const { CircularProgress } = require("@material-ui/core");
-
-//COMPONENTE
+//COMPONENT
 const ItemDetailContainer = () => {
   const [itemDetail, setItemDetail] = useState(undefined);
   const { title } = useParams();
+  /*--------------------Material UI--------------------*/
   const classes = useStyles();
+  /*--------------------Material UI--------------------*/
 
-  //Simula llamada al servidor
+ /*--------------------Firebase Call--------------------*/
   useEffect(() => {
-    getDoc(doc(db, "products", title)).then((querySnapshot) => {
-      const product = { id: querySnapshot.id, ...querySnapshot.data() };
-      setItemDetail(product);
-    });
-
-    return () => {
-      setItemDetail(undefined);
-    };
+    getProductsById(title, setItemDetail);
   }, [title]);
+ /*--------------------Firebase Call--------------------*/
 
-  //Spinner
+ /*--------------------Spinner--------------------*/
   if (!itemDetail) {
-    return (
-      <>
-        <div className={classes.toolbar} />
-        <Grid container justifyContent="center">
-          <CircularProgress color="secondary" />
-        </Grid>
-      </>
-    );
+    return <Spinner />;
   }
+ /*--------------------Spinner--------------------*/
 
   return (
     <main>

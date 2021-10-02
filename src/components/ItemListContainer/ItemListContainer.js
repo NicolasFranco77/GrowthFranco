@@ -2,93 +2,50 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
-import { Grid } from "@material-ui/core";
-import useStyles from "./styles";
-
+/*--------------------Components--------------------*/
 import ItemList from "../ItemList/ItemList";
+import Spinner from "../ConditionalComponents/Spinner/Spinner";
+/*--------------------Components--------------------*/
 
-import { db } from '../../services/firebase/firebase'
-import { collection, getDocs, query, where } from 'firebase/firestore'
-
-
-//Spinner
-const { CircularProgress } = require("@material-ui/core");
-
+/*--------------------Material UI--------------------*/
+import useStyles from "./styles";
+/*--------------------Material UI--------------------*/
 
 
+/*--------------------Firebase--------------------*/
+import {
+  getAllProducts,
+  getOffers,
+  getProductsByCagetegory,
+} from "../../services/firebase/firebase";
+/*--------------------Firebase--------------------*/
 
-//COMPONENTE
+//COMPONENT
 const ItemListContainer = () => {
-  const [listProducts, setListProducts] = useState([]);
+
+  const [listProducts, setListProducts] = useState(undefined);
   const { category } = useParams();
+  /*--------------------Material UI--------------------*/
   const classes = useStyles();
+  /*--------------------Material UI--------------------*/
 
-//Renderiza las ofertas o todos los productos
- useEffect(() => {
-
-  //Renderiza las ofertas
-  if (category === "ofertas" ) {
-
-    getDocs(query(collection(db, 'products'), where('oferta', '==', true))).then((querySnapshot) => {
-      const products = querySnapshot.docs.map(doc => {
-          return { id: doc.id, ...doc.data() }
-      }) 
-
-     
-      setListProducts(products);
-      
-      
-    });
-    return () => {
-      setListProducts(undefined);
-    };
-  }else{
-    
-    getDocs(collection(db, 'products')).then((querySnapshot) => {
-      const products = querySnapshot.docs.map(doc => {
-          return { id: doc.id, ...doc.data() }
-        }) 
-        setListProducts(products);
-      });
-      return () => {
-        setListProducts(undefined);
-      };
-
-  }
-  //Renderiza todos los productos
-    
-
-}, [category]);
-
-  
+  /*--------------------Firebase Call--------------------*/
   useEffect(() => {
-    //Renderiza las categorías
-    if (category === "proteinas" || category === "shakers"  ) {
-      getDocs(query(collection(db, 'products'), where('category', '==', category))).then((querySnapshot) => {
-        const products = querySnapshot.docs.map(doc => {
-            return { id: doc.id, ...doc.data() }
-        }) 
-
-       
-        setListProducts(products);
-      });
-      return () => {
-        setListProducts(undefined);
-      };
+    if (category === "ofertas") {
+      getOffers(setListProducts);
+    } else if (category === "proteinas" || category === "shakers") {
+      getProductsByCagetegory(setListProducts, category);
+    } else {
+      getAllProducts(setListProducts);
     }
   }, [category]);
+  /*--------------------Firebase Call--------------------*/
 
-  //Spinner
-  if (listProducts === undefined || listProducts.length === 0) {
-    return (
-      <>
-        <div className={classes.toolbar} />
-        <Grid container justifyContent="center">
-          <CircularProgress color="secondary" />
-        </Grid>
-      </>
-    );
+  /*--------------------Spinner--------------------*/
+  if (listProducts?.length === 0 || listProducts === undefined) {
+    return <Spinner />;
   }
+  /*--------------------Spinner--------------------*/
 
   return (
     <main className={classes.content}>
@@ -99,5 +56,3 @@ const ItemListContainer = () => {
 };
 
 export default ItemListContainer;
-
-

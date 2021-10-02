@@ -1,27 +1,22 @@
 import React from "react";
-import { useState } from "react";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { CartContext } from "../Context/CartContext.js";
-
-
+/*--------------------Material UI--------------------*/
 import { Button, Typography } from "@material-ui/core";
 import useStyles from "./styles.js";
 
-//COMPONENTE
+//COMPONENT
 const ItemCount = ({ stock, initial, onAdd, item }) => {
   const [count, setCount] = useState(initial);
-  const {
-    quantity,
-    changeQuantity,
-    addItem,
-    productsCart,
-    setProductsCart,
-    changeNavQuantity,
-  } = useContext(CartContext);
 
+  /*--------------------Material UI--------------------*/
   const classes = useStyles();
 
-  //Suma 1 al carrito
+  /*--------------------Cart Context--------------------*/
+  const { quantity, changeQuantity, isInCart, changeNavQuantity } =
+    useContext(CartContext);
+
+  /*--------------------Count +1----------------------*/
   const add = () => {
     if (count < stock) {
       setCount(count + 1);
@@ -29,7 +24,7 @@ const ItemCount = ({ stock, initial, onAdd, item }) => {
     }
   };
 
-  //Resta 1 al carrito
+  /*--------------------Count -1--------------------*/
   const subtract = () => {
     if (count > initial) {
       setCount(count - 1);
@@ -37,33 +32,10 @@ const ItemCount = ({ stock, initial, onAdd, item }) => {
     }
   };
 
+  /*--------------------Add to cart action--------------------*/
   const handleOnClick = () => {
-    const productsCartId = productsCart?.map((item) => item.id);
-
-    if (productsCartId?.includes(item.id)) {
-      const updateCart = productsCart?.map((i) => {
-        if (i.id === item.id) {
-          let oldQuantity = i.quantity;
-          return {
-            ...i,
-            quantity: count + oldQuantity,
-          };
-        } else {
-          return i;
-        }
-      });
-      setProductsCart(updateCart);
-    } else {
-      const newProduct = {
-        ...item,
-        quantity: count,
-      };
-
-      productsCart
-        ? addItem([...productsCart, newProduct])
-        : addItem([newProduct]);
-    }
-
+    isInCart(item, count);
+    changeNavQuantity(quantity);
     onAdd();
     changeNavQuantity(quantity);
   };
@@ -71,14 +43,24 @@ const ItemCount = ({ stock, initial, onAdd, item }) => {
   return (
     <div>
       <div className={classes.buttons}>
+        {/*--------------------Subtract button--------------------*/}
         <Button type="button" size="small" onClick={subtract}>
           -
         </Button>
+        {/*--------------------Subtract Button--------------------*/}
+
+        {/*--------------------Count--------------------*/}
         <Typography>{count}</Typography>
+        {/*--------------------Count--------------------*/}
+
+        {/*--------------------Add Button--------------------*/}
         <Button type="button" size="small" onClick={add}>
           +
         </Button>
+        {/*--------------------Add Button--------------------*/}
       </div>
+
+      {/*--------------------Add to cart Button--------------------*/}
       <Button
         onClick={handleOnClick}
         variant="contained"
@@ -88,6 +70,7 @@ const ItemCount = ({ stock, initial, onAdd, item }) => {
       >
         Agregar al carrito
       </Button>
+      {/*--------------------Add to cart Button--------------------*/}
     </div>
   );
 };

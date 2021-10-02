@@ -7,7 +7,37 @@ export const CartContextProvider = ({ children }) => {
   const [quantity, setQuantity] = useState(0);
   const [navQuantity, setNavQuantity] = useState(0);
 
-  console.log(productsCart);
+  
+
+const isInCart = (item,count) => {
+
+ const productsCartId = productsCart?.map((item) => item.id);
+
+    if (productsCartId?.includes(item.id)) {
+      const updateCart = productsCart?.map((i) => {
+        if (i.id === item.id) {
+          let oldQuantity = i.quantity;
+          return {
+            ...i,
+            quantity: count + oldQuantity,
+          };
+        } else {
+          return i;
+        }
+      });
+      setProductsCart(updateCart);
+    } else {
+      const newProduct = {
+        ...item,
+        quantity: count,
+      };
+
+      productsCart
+        ? addItem([...productsCart, newProduct])
+        : addItem([newProduct]);
+    }
+  
+}
 
   const removeItem = (itemId) => {
     const newList = productsCart.filter((item) => item.id !== itemId);
@@ -43,6 +73,7 @@ export const CartContextProvider = ({ children }) => {
         setProductsCart,
         changeNavQuantity,
         navQuantity,
+        isInCart
       }}
     >
       {children}

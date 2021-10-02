@@ -1,8 +1,13 @@
 import React from "react";
-import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import { CartContext } from "../Context/CartContext";
+import { useState, useContext} from "react";
 
+
+/*--------------------Components--------------------*/
+import ItemCount from "../ItemCount/ItemCount";
+import Cta from "../ConditionalComponents/CTA/Cta";
+/*--------------------Components--------------------*/
+
+/*--------------------Material UI--------------------*/
 import useStyles from "./styles";
 import {
   Card,
@@ -10,68 +15,59 @@ import {
   CardContent,
   CardActions,
   Typography,
-  Button,
 } from "@material-ui/core";
+/*--------------------Material UI--------------------*/
 
-import ItemCount from "../ItemCount/ItemCount";
 
-//COMPONENTE
+
+//COMPONENT
 const ItemDetail = ({ itemDetail }) => {
-  const { quantity, addItem, isInCart } = useContext(CartContext);
+ 
   const [cart, setCart] = useState(true);
   const [itemCount, setItemCount] = useState();
 
+/*--------------------Material UI--------------------*/
   const classes = useStyles();
+/*--------------------Material UI--------------------*/
 
-  //Desaparece el contador
-
+  
+/*--------------------Count or Call to action--------------------*/
   const handleOnAdd = () => {
     setCart(false);
-  };
 
-  //Componente condicional
-  const FinalizarCompra = () => {
-    //Aparece el carritto
-   
+  };
+/*--------------------Count or Call to action--------------------*/
+
   
-
-    return (
-      <>
-      <CardActions disableSpacing className={classes.cardActions2}>
-       <Link style={{ textDecoration: "none" }} to="/">
-        <Button  variant="contained" color="primary">
-          Seguir comprando
-        </Button>
-        </Link>
-        <Link style={{ textDecoration: "none" }} to="/cart">
-          <Button variant="contained" color="secondary">
-            Finalizar Compra
-          </Button>
-        </Link>
-        </CardActions>
-      </>
-    );
-  };
-
-  //RETURN DEL COMPONENTE PRINCIPAL
   return (
     <main className={classes.content}>
       <Grid container justifyContent="center" spacing={4}>
         <Card className={classes.root}>
           <CardContent>
             <div className={classes.cardContent}>
+              { /*--------------------Title--------------------*/}
               <Typography variant="h5" gutterBottom>
-                {itemDetail.title}
-              </Typography>
+                {itemDetail.title}</Typography>
+              { /*--------------------Title--------------------*/}
+
+              { /*--------------------Price--------------------*/}
               <Typography variant="h5">${itemDetail.price}</Typography>
+              { /*--------------------Price--------------------*/}
+
             </div>
+
+            { /*--------------------Image--------------------*/}
             <Grid container justifyContent="center" spacing={4}>
-              <img src={itemDetail.pictureUrl} alt="" />
-            </Grid>
+              <img src={itemDetail.pictureUrl} alt="" /></Grid>
+            { /*--------------------Image--------------------*/}
+
+            { /*--------------------Long description--------------------*/}
             <Typography variant="body2" color="textSecondary">
-              {itemDetail.longDescription}
-            </Typography>
+              {itemDetail.longDescription}</Typography>
+            { /*--------------------Long description--------------------*/}
+
           </CardContent>
+          { /*--------------------Count or Call to action--------------------*/}
           {cart ?
           <CardActions disableSpacing className={classes.cardActions}>
              
@@ -84,9 +80,9 @@ const ItemDetail = ({ itemDetail }) => {
               />
                </CardActions>
              : 
-              <FinalizarCompra />
+              <Cta />
             }
-         
+          { /*--------------------Count or Call to action--------------------*/}
         </Card>
       </Grid>
     </main>

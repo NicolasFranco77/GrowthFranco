@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { CartContext } from "../../../Context/CartContext";
-
+/*--------------------Material UI--------------------*/
 import {
   Typography,
   Button,
@@ -9,34 +9,27 @@ import {
   CardContent,
   CardMedia,
 } from "@material-ui/core";
-
 import useStyles from "./styles.js";
+/*--------------------Material UI--------------------*/
 
 const CartItem = ({ item, setCantidad }) => {
   const classes = useStyles();
-  const [cantidadItem, setCantidadItem] = useState(item.quantity);
+
+  /*--------------------CartContext-------------------*/
   const {
     removeItem,
     changeNavQuantity,
     navQuantity,
     changeQuantity,
     quantity,
-    productsCart
   } = useContext(CartContext);
+  /*--------------------CartContext-------------------*/
 
   const handleOnClick = () => {
     removeItem(item.id);
     changeQuantity(quantity - item.quantity);
     changeNavQuantity(navQuantity - item.quantity);
   };
-
-
-
-
-
-
-
-  setCantidad(Number(item.price) * Number(item.quantity));
 
   return (
     <Card>
@@ -47,12 +40,16 @@ const CartItem = ({ item, setCantidad }) => {
       />
       <CardContent className={classes.cardContent}>
         <Typography variant="h4">{item.title}</Typography>
+
+        {/*--------------------Product Total Price-------------------*/}
         <Typography variant="h5">
-          {" "}
           ${Number(item.price) * Number(item.quantity)}
         </Typography>
+        {/*--------------------Product Total Price-------------------*/}
       </CardContent>
+
       <CardActions className={classes.cardActions}>
+        {/*--------------------Product Quantity-------------------*/}
         <div className={classes.buttons}>
           {/* <Button type="button" size="small" onClick={item.quantity - 1}>
             -
@@ -62,6 +59,9 @@ const CartItem = ({ item, setCantidad }) => {
             +
             </Button> */}
         </div>
+        {/*--------------------Product Quantity-------------------*/}
+
+        {/*--------------------Remove Button-------------------*/}
         <Button
           variant="contained"
           type="button"
@@ -70,6 +70,7 @@ const CartItem = ({ item, setCantidad }) => {
         >
           Remover
         </Button>
+        {/*--------------------Remove Button-------------------*/}
       </CardActions>
     </Card>
   );
