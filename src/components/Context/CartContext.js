@@ -6,8 +6,22 @@ export const CartContextProvider = ({ children }) => {
   const [productsCart, setProductsCart] = useState([]);
   const [quantity, setQuantity] = useState(0);
   const [navQuantity, setNavQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0)
+  
 
   
+
+  
+const getPrice = () => {
+
+
+  const totalArray = productsCart.map(
+    (itemCart) => itemCart.price * itemCart.quantity
+    
+  );
+  let total = totalArray.reduce((a, b) => a + b, 0);
+ setTotalPrice(total)
+}
 
 const isInCart = (item,count) => {
 
@@ -73,7 +87,9 @@ const isInCart = (item,count) => {
         setProductsCart,
         changeNavQuantity,
         navQuantity,
-        isInCart
+        isInCart,
+        getPrice,totalPrice,
+
       }}
     >
       {children}

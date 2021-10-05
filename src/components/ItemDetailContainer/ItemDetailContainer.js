@@ -13,8 +13,8 @@ import { getProductsById } from "../../services/firebase/firebase";
 
 /*--------------------Material UI--------------------*/
 import useStyles from "./styles";
+import { Grid } from "@material-ui/core";
 /*--------------------Material UI--------------------*/
-
 
 //COMPONENT
 const ItemDetailContainer = () => {
@@ -24,22 +24,24 @@ const ItemDetailContainer = () => {
   const classes = useStyles();
   /*--------------------Material UI--------------------*/
 
- /*--------------------Firebase Call--------------------*/
+  /*--------------------Firebase Call--------------------*/
   useEffect(() => {
     getProductsById(title, setItemDetail);
   }, [title]);
- /*--------------------Firebase Call--------------------*/
+  /*--------------------Firebase Call--------------------*/
 
- /*--------------------Spinner--------------------*/
+  /*--------------------Spinner--------------------*/
   if (!itemDetail) {
     return <Spinner />;
   }
- /*--------------------Spinner--------------------*/
+  /*--------------------Spinner--------------------*/
 
   return (
-    <main>
+    <main >
+      <Grid container xs={12} >
       <div className={classes.toolbar} />
       <ItemDetail itemDetail={itemDetail} />
+      </Grid>
     </main>
   );
 };

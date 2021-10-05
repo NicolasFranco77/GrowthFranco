@@ -15,7 +15,7 @@ export default makeStyles((theme) => ({
   },
   cardActions: {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
   },
 
   cardActions2: {

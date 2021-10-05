@@ -11,7 +11,6 @@ import Spinner from "../ConditionalComponents/Spinner/Spinner";
 import useStyles from "./styles";
 /*--------------------Material UI--------------------*/
 
-
 /*--------------------Firebase--------------------*/
 import {
   getAllProducts,
@@ -22,18 +21,17 @@ import {
 
 //COMPONENT
 const ItemListContainer = () => {
-
   const [listProducts, setListProducts] = useState(undefined);
   const { category } = useParams();
   /*--------------------Material UI--------------------*/
-  const classes = useStyles();
+ 
   /*--------------------Material UI--------------------*/
-
+  const classes = useStyles();
   /*--------------------Firebase Call--------------------*/
   useEffect(() => {
     if (category === "ofertas") {
       getOffers(setListProducts);
-    } else if (category === "proteinas" || category === "shakers") {
+    } else if (category) {
       getProductsByCagetegory(setListProducts, category);
     } else {
       getAllProducts(setListProducts);

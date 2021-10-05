@@ -18,7 +18,7 @@ const Navbar = () => {
 
   return (
     <>
-      <AppBar position="fixed" className={classes.appBar} color="inherit">
+      <AppBar position="fixed" className={classes.appBar} color="inherit" >
         <Toolbar>
         {/*--------------------Brand--------------------*/}
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>

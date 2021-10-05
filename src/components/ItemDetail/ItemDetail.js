@@ -22,9 +22,10 @@ import {
 
 //COMPONENT
 const ItemDetail = ({ itemDetail }) => {
- 
+
   const [cart, setCart] = useState(true);
   const [itemCount, setItemCount] = useState();
+  const [notification, setNotification] = useState(false)
 
 /*--------------------Material UI--------------------*/
   const classes = useStyles();
@@ -41,7 +42,7 @@ const ItemDetail = ({ itemDetail }) => {
   
   return (
     <main className={classes.content}>
-      <Grid container justifyContent="center" spacing={4}>
+      <Grid container justifyContent="center" spacing={4} xs={12} >
         <Card className={classes.root}>
           <CardContent>
             <div className={classes.cardContent}>
@@ -65,14 +66,16 @@ const ItemDetail = ({ itemDetail }) => {
             <Typography variant="body2" color="textSecondary">
               {itemDetail.longDescription}</Typography>
             { /*--------------------Long description--------------------*/}
+           
 
           </CardContent>
           { /*--------------------Count or Call to action--------------------*/}
           {cart ?
           <CardActions disableSpacing className={classes.cardActions}>
-             
+              <Typography variant="button">En Stock: {itemDetail.stock}</Typography>
               <ItemCount
-                stock={5}
+                setNotification={setNotification}
+                stock={itemDetail.stock}
                 item={itemDetail}
                 initial={0}
                 onAdd={handleOnAdd}
@@ -83,6 +86,9 @@ const ItemDetail = ({ itemDetail }) => {
               <Cta />
             }
           { /*--------------------Count or Call to action--------------------*/}
+          {notification && <Typography  className={classes.cardActions} color="secondary" variant="button">Selecciona la cantidad</Typography>}
+          {itemDetail.stock === 0 && <Typography  className={classes.cardActions} color="secondary" variant="button">Producto Agotado
+          </Typography>}
         </Card>
       </Grid>
     </main>

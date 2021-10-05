@@ -22,7 +22,7 @@ const Cta = () => {
         </Link>
         <Link style={{ textDecoration: "none" }} to="/cart">
           <Button variant="contained" color="secondary">
-            Finalizar Compra
+            Ir al Carrito
           </Button>
         </Link>
       </CardActions>

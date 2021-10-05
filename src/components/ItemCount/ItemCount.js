@@ -6,7 +6,7 @@ import { Button, Typography } from "@material-ui/core";
 import useStyles from "./styles.js";
 
 //COMPONENT
-const ItemCount = ({ stock, initial, onAdd, item }) => {
+const ItemCount = ({ stock, initial, onAdd, item, setNotification}) => {
   const [count, setCount] = useState(initial);
 
   /*--------------------Material UI--------------------*/
@@ -34,10 +34,15 @@ const ItemCount = ({ stock, initial, onAdd, item }) => {
 
   /*--------------------Add to cart action--------------------*/
   const handleOnClick = () => {
-    isInCart(item, count);
-    changeNavQuantity(quantity);
-    onAdd();
-    changeNavQuantity(quantity);
+    if (count) {
+      setNotification(false)
+      isInCart(item, count);
+      changeQuantity(quantity);
+      onAdd();
+      changeNavQuantity(quantity);
+    }else{
+      setNotification(true)
+    }
   };
 
   return (
