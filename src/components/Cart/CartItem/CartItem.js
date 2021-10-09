@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { CartContext } from "../../../Context/CartContext";
-/*--------------------Material UI--------------------*/
+import { CartContext } from "../../../context/CartContext";
+import { Link } from "react-router-dom";
 import {
   Typography,
   Button,
@@ -10,21 +10,19 @@ import {
   CardMedia,
 } from "@material-ui/core";
 import useStyles from "./styles.js";
-/*--------------------Material UI--------------------*/
 
-const CartItem = ({ item, setCantidad }) => {
+const CartItem = ({ item }) => {
   const classes = useStyles();
 
-  /*--------------------CartContext-------------------*/
   const {
     removeItem,
+    quantity,
+    changeQuantity,
     changeNavQuantity,
     navQuantity,
-    changeQuantity,
-    quantity,
   } = useContext(CartContext);
-  /*--------------------CartContext-------------------*/
 
+  /*-----Remove Button -----*/
   const handleOnClick = () => {
     removeItem(item.id);
     changeQuantity(quantity - item.quantity);
@@ -34,34 +32,36 @@ const CartItem = ({ item, setCantidad }) => {
   return (
     <Card>
       <CardMedia
+        style={{ textDecoration: "none", color: "inherit" }}
+        component={Link}
+        to={`item/${item.id}/${item.title}`}
         image={item.pictureUrl}
         alt={item.title}
         className={classes.media}
       />
       <CardContent className={classes.cardContent}>
-        <Typography variant="h4">{item.title}</Typography>
+        <Typography
+          style={{ textDecoration: "none", color: "inherit" }}
+          component={Link}
+          to={`item/${item.id}/${item.title}`}
+          variant="h4"
+        >
+          {item.title}
+        </Typography>
 
-        {/*--------------------Product Total Price-------------------*/}
+        {/*-----------Product Total Price-----------*/}
         <Typography variant="h5">
           ${Number(item.price) * Number(item.quantity)}
         </Typography>
-        {/*--------------------Product Total Price-------------------*/}
       </CardContent>
 
       <CardActions className={classes.cardActions}>
-        {/*--------------------Product Quantity-------------------*/}
+        {/*----------Product Quantity---------*/}
         <div className={classes.buttons}>
-          {/* <Button type="button" size="small" onClick={item.quantity - 1}>
-            -
-          </Button> */}
           <Typography>{`Cantidad: ${item.quantity}    `}</Typography>
-          {/* <Button type="button" size="small" onClick={() => setCantidadItem(Number(item.quantity) + 1)}>
-            +
-            </Button> */}
         </div>
-        {/*--------------------Product Quantity-------------------*/}
 
-        {/*--------------------Remove Button-------------------*/}
+        {/*--Remove Button--*/}
         <Button
           variant="contained"
           type="button"

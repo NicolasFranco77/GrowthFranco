@@ -1,47 +1,54 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-
-/*--------------------Components--------------------*/
+import { Link } from "react-router-dom";
 import ItemDetail from "../ItemDetail/ItemDetail";
 import Spinner from "../ConditionalComponents/Spinner/Spinner";
-/*--------------------Components--------------------*/
-
-/*--------------------Firebase--------------------*/
 import { getProductsById } from "../../services/firebase/firebase";
-/*--------------------Firebase--------------------*/
-
-/*--------------------Material UI--------------------*/
 import useStyles from "./styles";
-import { Grid } from "@material-ui/core";
-/*--------------------Material UI--------------------*/
+import { Button, Grid, Typography } from "@material-ui/core";
 
-//COMPONENT
 const ItemDetailContainer = () => {
   const [itemDetail, setItemDetail] = useState(undefined);
   const { title } = useParams();
-  /*--------------------Material UI--------------------*/
+  /*-------Material UI-------*/
   const classes = useStyles();
-  /*--------------------Material UI--------------------*/
 
-  /*--------------------Firebase Call--------------------*/
+  /*------------Firebase Call------------*/
   useEffect(() => {
     getProductsById(title, setItemDetail);
   }, [title]);
-  /*--------------------Firebase Call--------------------*/
 
-  /*--------------------Spinner--------------------*/
+  /*------Spinner------*/
   if (!itemDetail) {
     return <Spinner />;
   }
-  /*--------------------Spinner--------------------*/
+
+  /*if product doesn't exists*/
+  if (!itemDetail.title) {
+    return (
+      <Grid
+        container
+        alignContent="center"
+        justifyContent="center"
+        style={{ height: "50vh" }}
+      >
+        <Grid container justifyContent="center">
+          <Typography gutterBottom variant="h4">
+            {`"${itemDetail.id}" no está disponible.`}
+          </Typography>
+        </Grid>
+
+        <Button component={Link} to="/" variant="outlined" color="primary">
+          Ver Productos disponibles
+        </Button>
+      </Grid>
+    );
+  }
 
   return (
-    <main >
-      <Grid container xs={12} >
+    <main>
       <div className={classes.toolbar} />
       <ItemDetail itemDetail={itemDetail} />
-      </Grid>
     </main>
   );
 };

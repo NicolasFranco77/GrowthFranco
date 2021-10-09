@@ -1,13 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-/*--------------------Components--------------------*/
 import Item from "../Item/Item";
-/*--------------------Components--------------------*/
-/*--------------------Material UI--------------------*/
 import { Grid } from "@material-ui/core";
-/*--------------------Material UI--------------------*/
 
-//COMPONENT
 const ItemList = ({ listProducts }) => {
   return (
     <main>

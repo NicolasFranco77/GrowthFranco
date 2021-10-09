@@ -1,16 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-/*--------------------Material UI--------------------*/
 import useStyles from "./styles";
 import { CardActions, Button } from "@material-ui/core";
 
-/*--------------------Material UI--------------------*/
-
 const Cta = () => {
-  /*--------------------Material UI--------------------*/
+  /*------Material UI-------*/
   const classes = useStyles();
-  /*--------------------Material UI--------------------*/
 
   return (
     <>

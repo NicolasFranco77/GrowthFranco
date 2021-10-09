@@ -10,25 +10,14 @@ export default makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     maxWidth: "50%",
-    
-  
   },
   cardActions: {
     display: "flex",
     justifyContent: "space-between",
   },
 
-  cardActions2: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-
-
   cardContent: {
     display: "flex",
     justifyContent: "space-between",
   },
-
-
-
 }));

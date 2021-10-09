@@ -1,26 +1,18 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/commerce.png";
-/*--------------------Material UI--------------------*/
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import useStyles from "./styles";
-/*--------------------Material UI--------------------*/
-/*--------------------Components--------------------*/
 import CartWidget from "./CartWidget";
-/*--------------------Components--------------------*/
-
-
-//COMPONENT
 
 const Navbar = () => {
   const classes = useStyles();
-  
 
   return (
     <>
-      <AppBar position="fixed" className={classes.appBar} color="inherit" >
+      <AppBar position="fixed" className={classes.appBar} color="inherit">
         <Toolbar>
-        {/*--------------------Brand--------------------*/}
+          {/*---------------------------Brand---------------------------*/}
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
             <Typography
               to="/"
@@ -38,8 +30,8 @@ const Navbar = () => {
             </Typography>
           </Link>
           <div className={classes.grow} />
-           {/*--------------------Brand--------------------*/}
-           {/*--------------------MENU--------------------*/}
+
+          {/*------------------------------MENU----------------------------*/}
           <NavLink to="/" style={{ textDecoration: "none", color: "inherit" }}>
             <Button
               variant="text"
@@ -94,7 +86,6 @@ const Navbar = () => {
           >
             <CartWidget />
           </NavLink>
-            {/*--------------------MENU--------------------*/}
         </Toolbar>
       </AppBar>
     </>

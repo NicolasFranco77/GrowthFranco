@@ -1,77 +1,24 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { CartContext } from "../Context/CartContext";
-
-/*--------------------Material UI--------------------*/
-import { Button, Grid, TextField, Box } from "@material-ui/core";
-/*--------------------Material UI--------------------*/
-/*--------------------Firebase--------------------*/
-import {
-  collection,
-  addDoc,
-  getDoc,
-  doc,
-  Timestamp,
-  writeBatch,
-} from "firebase/firestore";
-import { db } from "../../services/firebase/firebase";
-/*--------------------Firebase--------------------*/
-import Spinner from "../ConditionalComponents/Spinner/Spinner";
-
-const AddressForm = () => {
-  const [user, setUser] = useState();
-  const { register, handleSubmit } = useForm();
-  const { productsCart, clear, totalPrice } = useContext(CartContext);
+import { Button, Grid, TextField, Box, Typography } from "@material-ui/core";
 
 
- 
-
-  const confirmOrder = () => {
-    const objOrder = {
-      buyer: user,
-      items: productsCart,
-      total: totalPrice,
-      date: Timestamp.fromDate(new Date()),
-    };
-
-    const batch = writeBatch(db);
-    const outOfStock = [];
-
-    objOrder.items.forEach((prod, i) => {
-      getDoc(doc(db, "products", prod.id)).then((DocumentSnapshot) => {
-        if (DocumentSnapshot.data().stock >= objOrder.items[i].quantity) {
-          batch.update(doc(db, "products", DocumentSnapshot.id), {
-            stock: DocumentSnapshot.data().stock - objOrder.items[i].quantity,
-          });
-        } else {
-          outOfStock.push({
-            ...DocumentSnapshot.data(),
-            id: DocumentSnapshot.id,
-          });
-        }
-      });
-    });
-
-    if (outOfStock.length === 0) {
-      addDoc(collection(db, "orders"), objOrder)
-        .then(() => {
-          batch.commit().then(() => {
-            alert("La orden se ejecuto con exito");
-          });
-        })
-        .catch((error) => {
-          alert("error", "Error al ejecutar la orden");
-        })
-        .finally(() => {
-          clear();
-        });
-    }
-  };
+const AddressForm = ({ setUser, setSteps }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm();
 
   const onSubmit = (data) => {
     setUser(data);
+    setSteps(1);
   };
+
+  const emailPattern =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   return (
     <>
@@ -97,7 +44,56 @@ const AddressForm = () => {
               {...register("lastname")}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              name="email"
+              label="Email"
+              fullWidth
+              autoComplete="email"
+              variant="standard"
+              {...register("email", {
+                pattern: emailPattern,
+              })}
+            />
+            {errors.email && (
+              <Typography color="secondary">Ingrese un email válido</Typography>
+            )}
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              name="emailConfirmation"
+              label="Confirmar Email"
+              fullWidth
+              autoComplete="none"
+              variant="standard"
+              {...register("emailConfirmation", {
+                validate: {
+                  emailEqual: (value) =>
+                    value === getValues().email ||
+                    "Debe ingresar el mismo email",
+                },
+              })}
+            />
+            {errors.emailConfirmation && (
+              <Typography color="secondary">
+                {errors?.emailConfirmation?.message}
+              </Typography>
+            )}
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              label="Telefono"
+              fullWidth
+              autoComplete="phone"
+              variant="standard"
+              {...register("phone")}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <TextField
               required
               id="address1"
@@ -141,29 +137,20 @@ const AddressForm = () => {
             <Button
               component={Link}
               variant="outlined"
-              to="/cart"
+              to="/cart" //back to cart
               sx={{ mt: 3, ml: 1 }}
             >
               Volver
             </Button>
-            {!user ? (
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                sx={{ mt: 3, ml: 1 }}
-              >
-                Listo
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => confirmOrder()}
-              >
-                Finalizar
-              </Button>
-            )}
+
+            <Button
+              type="submit" //trigger onSubmit
+              variant="contained"
+              color="primary"
+              sx={{ mt: 3, ml: 1 }}
+            >
+              Listo
+            </Button>
           </Box>
         </Grid>
       </form>

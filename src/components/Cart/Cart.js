@@ -1,21 +1,18 @@
-import React, { useContext } from "react";
-import { CartContext } from "../../Context/CartContext";
-
-/*--------------------Material UI--------------------*/
+import React, { useContext, useEffect } from "react";
+import { CartContext } from "../../context/CartContext";
 import { Container, Typography } from "@material-ui/core";
 import useStyles from "./styles";
-/*--------------------Material UI--------------------*/
-
-/*--------------------Components--------------------*/
 import FilledCart from "./FilledCart";
 import EmptyCart from "./EmptyCart";
-/*--------------------Components--------------------*/
 
 const Cart = () => {
-  const classes = useStyles();
   const { productsCart, getPrice } = useContext(CartContext);
+  /*-----Material UI ----- */
+  const classes = useStyles();
 
-  getPrice();
+  useEffect(() => {
+    getPrice();
+  }, [getPrice]);
 
   return (
     <Container>
