@@ -46,7 +46,7 @@ const ItemDetailContainer = () => {
   }
 
   return (
-    <main>
+    <main className={classes.content}>
       <div className={classes.toolbar} />
       <ItemDetail itemDetail={itemDetail} />
     </main>

@@ -22,9 +22,13 @@ const ItemDetail = ({ itemDetail }) => {
     setCart(false);
   };
 
+
+
+
   return (
-    <main className={classes.content}>
-      <Grid container justifyContent="center" spacing={4}>
+    
+    <Grid container justifyContent="center" spacing={4}>
+      <Grid item xs={12} sm={10} md={8} lg={6}>
         <Card className={classes.root}>
           <CardContent>
             <div className={classes.cardContent}>
@@ -86,7 +90,7 @@ const ItemDetail = ({ itemDetail }) => {
           )}
         </Card>
       </Grid>
-    </main>
+    </Grid>
   );
 };
 

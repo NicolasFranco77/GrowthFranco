@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { CartContext } from "../../context/CartContext";
-import { Container, Typography } from "@material-ui/core";
+import { Container, Typography, Grid } from "@material-ui/core";
 import useStyles from "./styles";
 import FilledCart from "./FilledCart";
 import EmptyCart from "./EmptyCart";
@@ -17,6 +17,7 @@ const Cart = () => {
   return (
     <Container>
       <div className={classes.toolbar} />
+
       <Typography className={classes.title} variant="h3" gutterBottom>
         Carrito de Compras
       </Typography>

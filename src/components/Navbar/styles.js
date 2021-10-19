@@ -16,13 +16,23 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     display: "flex",
     textDecoration: "none",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "12px",
+      marginRight: theme.spacing(1),
+    },
   },
   image: {
     marginRight: "10px",
+    [theme.breakpoints.down("xs")]: {
+      marginRight: theme.spacing(1),
+    },
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up("sm")]: {},
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "10px",
+      marginRight: theme.spacing(-1.5),
+    },
   },
   grow: {
     flexGrow: 1,

@@ -65,6 +65,14 @@ const Review = ({ user, setUser, setSteps, setResult }) => {
       });
     });
 
+
+
+
+
+
+
+
+
     if (outOfStock.length === 0) {
       addDoc(collection(db, "orders"), objOrder)
         .then(() => {

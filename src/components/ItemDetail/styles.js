@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
   },
   root: {
     flexGrow: 1,
-    maxWidth: "50%",
+    // maxWidth: "50%",
   },
   cardActions: {
     display: "flex",
