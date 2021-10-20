@@ -9,18 +9,9 @@ import {
   ListItem,
   ListItemText,
 } from "@material-ui/core";
-import {
-  collection,
-  where,
-  addDoc,
-  getDoc,
-  doc,
-  Timestamp,
-  writeBatch,
-  getDocs,
-  query,
-} from "firebase/firestore";
-import { db } from "../../services/firebase/firebase";
+import { Timestamp } from "firebase/firestore";
+
+import { createOrder, getUserId } from "../../services/firebase/firebase";
 
 const Review = ({ user, setUser, setSteps, setResult }) => {
   const { productsCart, totalPrice, clear } = useContext(CartContext);
@@ -47,64 +38,16 @@ const Review = ({ user, setUser, setSteps, setResult }) => {
       date: Timestamp.fromDate(new Date()),
     };
 
-    const batch = writeBatch(db);
-    const outOfStock = [];
+    createOrder(objOrder).then((resolve) => {
+      setResult(1);
+      clear();
 
-    objOrder.items.forEach((prod, i) => {
-      getDoc(doc(db, "products", prod.id)).then((DocumentSnapshot) => {
-        if (DocumentSnapshot.data().stock >= objOrder.items[i].quantity) {
-          batch.update(doc(db, "products", DocumentSnapshot.id), {
-            stock: DocumentSnapshot.data().stock - objOrder.items[i].quantity,
-          });
-        } else {
-          outOfStock.push({
-            ...DocumentSnapshot.data(),
-            id: DocumentSnapshot.id,
-          });
-        }
-      });
-    });
-
-
-
-
-
-
-
-
-
-    if (outOfStock.length === 0) {
-      addDoc(collection(db, "orders"), objOrder)
-        .then(() => {
-          batch.commit().then(() => {
-            setResult(1);
-            clear();
-
-            /*- -----------------------------------------------------------*/
-            getDocs(
-              query(
-                collection(db, "orders"),
-                where("date", "==", objOrder.date)
-              )
-            )
-              .then((querySnapshot) => {
-                var userId = querySnapshot.docs.map((doc) => {
-                  return doc.id;
-                });
-                setUser({ id: userId, ...user });
-              })
-              .catch((error) => {
-                console.log("Error searching intems", error);
-              });
-
-            /*----------------------------------------------------------- */
-          });
+      getUserId(objOrder)
+        .then((resolve) => {
+          setUser({ id: resolve, ...user });
         })
-        .catch((error) => {
-          alert("Error al ejecutar la orden");
-          setResult(false);
-        });
-    }
+        .catch((error) => console.log(error));
+    });
   };
 
   return (

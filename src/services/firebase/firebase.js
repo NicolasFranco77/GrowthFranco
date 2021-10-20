@@ -7,6 +7,8 @@ import {
   where,
   doc,
   getDoc,
+  writeBatch,
+  addDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -20,83 +22,86 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 
-export const getProducts = (setListProducts, category) => {
-  if (category === "ofertas") {
-    getDocs(query(collection(db, "products"), where("oferta", "==", true)))
+export const getProducts = (key, operator, value) => {
+  return new Promise((resolve, reject) => {
+    const collectionQuery =
+      key && operator && value
+        ? query(collection(db, "products"), where(key, operator, value))
+        : collection(db, "products");
+
+    getDocs(collectionQuery)
       .then((querySnapshot) => {
         const products = querySnapshot.docs.map((doc) => {
           return { id: doc.id, ...doc.data() };
         });
-
-        setListProducts(products);
+        resolve(products);
       })
       .catch((error) => {
-        console.log("Error searching intems", error);
+        reject("error al obtener productos", error);
       });
-
-    return () => {
-      setListProducts(undefined);
-    };
-  } else if (category) {
-    getDocs(
-      query(collection(db, "products"), where("category", "==", category))
-    )
-      .then((querySnapshot) => {
-        const products = querySnapshot.docs.map((doc) => {
-          return { id: doc.id, ...doc.data() };
-        });
-
-        setListProducts(products);
-      })
-      .catch((error) => {
-        console.log("Error searching intems", error);
-      });
-    return () => {
-      setListProducts(undefined);
-    };
-  } else {
-    getDocs(collection(db, "products"))
-      .then((querySnapshot) => {
-        const products = querySnapshot.docs.map((doc) => {
-          return { id: doc.id, ...doc.data() };
-        });
-        setListProducts(products);
-      })
-      .catch((error) => {
-        console.log("Error searching intems", error);
-      });
-    return () => {
-      getDocs(collection(db, "products"))
-        .then((querySnapshot) => {
-          const products = querySnapshot.docs.map((doc) => {
-            return { id: doc.id, ...doc.data() };
-          });
-          setListProducts(products);
-        })
-        .catch((error) => {
-          console.log("Error searching intems", error);
-        });
-      return () => {
-        setListProducts(undefined);
-      };
-    };
-  }
+  });
 };
 
-export const getProductsById = (title, setItemDetail) => { 
-  getDoc(doc(db, "products", title))
-    .then((querySnapshot) => {
-      
-      const product = { id: querySnapshot.id, ...querySnapshot.data() };
-      setItemDetail(product);
-    })
-    .catch((error) => {
-      console.log("Error searching intems", error);
+export const getProductsById = (id) => {
+  return new Promise((resolve, reject) => {
+    getDoc(doc(db, "products", id))
+      .then((querySnapshot) => {
+        const product = { id: querySnapshot.id, ...querySnapshot.data() };
+        resolve(product);
+      })
+      .catch((error) => {
+        reject("Error buscando item", error);
+      });
+  });
+};
+
+export const createOrder = (objOrder) => {
+  return new Promise((resolve, reject) => {
+    const batch = writeBatch(db);
+    const outOfStock = [];
+
+    objOrder.items.forEach((prod, i) => {
+      getDoc(doc(db, "products", prod.id)).then((DocumentSnapshot) => {
+        if (DocumentSnapshot.data().stock >= objOrder.items[i].quantity) {
+          batch.update(doc(db, "products", DocumentSnapshot.id), {
+            stock: DocumentSnapshot.data().stock - objOrder.items[i].quantity,
+          });
+        } else {
+          outOfStock.push({
+            ...DocumentSnapshot.data(),
+            id: DocumentSnapshot.id,
+          });
+        }
+      });
     });
 
-  return () => {
-    setItemDetail(undefined);
-  };
+    if (outOfStock.length === 0) {
+      addDoc(collection(db, "orders"), objOrder)
+        .then(() => {
+          batch.commit().then(() => {
+            resolve("La orden se ejecutó con éxito");
+          });
+        })
+        .catch((error) => {
+          reject("Error al ejecutar la orden: ", error);
+        });
+    }
+  });
+};
+
+export const getUserId = (objOrder) => {
+  return new Promise((resolve, reject) => {
+    getDocs(query(collection(db, "orders"), where("date", "==", objOrder.date)))
+      .then((querySnapshot) => {
+        var userId = querySnapshot.docs.map((doc) => {
+          return doc.id;
+        });
+        resolve(userId);
+      })
+      .catch((error) => {
+        reject("Error al obtener user id", error);
+      });
+  });
 };
 
 export const db = getFirestore(app);

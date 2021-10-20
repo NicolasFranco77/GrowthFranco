@@ -7,8 +7,9 @@ import {
   Grid,
   CardContent,
   CardActions,
-  Typography,
+  Typography,Box
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 const ItemDetail = ({ itemDetail }) => {
   const [cart, setCart] = useState(true);
@@ -22,11 +23,7 @@ const ItemDetail = ({ itemDetail }) => {
     setCart(false);
   };
 
-
-
-
   return (
-    
     <Grid container justifyContent="center" spacing={4}>
       <Grid item xs={12} sm={10} md={8} lg={6}>
         <Card className={classes.root}>
@@ -70,23 +67,13 @@ const ItemDetail = ({ itemDetail }) => {
           )}
           {/*---do not add 0 products---*/}
           {notification && (
-            <Typography
-              className={classes.cardActions}
-              color="secondary"
-              variant="button"
-            >
-              Seleccione la cantidad
-            </Typography>
+            <Alert severity="error">Seleccione la cantidad</Alert>
           )}
           {/*-----Out of stock-----*/}
           {itemDetail.stock === 0 && (
-            <Typography
-              className={classes.cardActions}
-              color="secondary"
-              variant="button"
-            >
-              Producto Agotado
-            </Typography>
+            <Box mt={1}>
+            <Alert severity="error">Producto Agotado</Alert>
+            </Box>
           )}
         </Card>
       </Grid>

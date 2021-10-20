@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { CartContext } from "../../../context/CartContext";
 import { Link } from "react-router-dom";
 import {
-  Grid,
   Typography,
   Button,
   Card,
@@ -31,7 +30,6 @@ const CartItem = ({ item }) => {
   };
 
   return (
-   
     <Card>
       <CardMedia
         style={{ textDecoration: "none", color: "inherit" }}
@@ -75,8 +73,6 @@ const CartItem = ({ item }) => {
         {/*--------------------Remove Button-------------------*/}
       </CardActions>
     </Card>
-   
-   
   );
 };
 

@@ -5,7 +5,7 @@ import { Grid } from "@material-ui/core";
 
 const ItemList = ({ listProducts }) => {
   return (
-    <main>
+    <>
       <Grid container justifyContent="center" spacing={4}>
         {listProducts?.map((product) => (
           <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
@@ -19,7 +19,7 @@ const ItemList = ({ listProducts }) => {
           </Grid>
         ))}
       </Grid>
-    </main>
+    </>
   );
 };
 

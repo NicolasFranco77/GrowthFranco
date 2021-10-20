@@ -41,19 +41,7 @@ const Navbar = () => {
               PRODUCTOS
             </Button>
           </NavLink>
-          <NavLink
-            to="/category/ofertas"
-            activeClassName={classes.active}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <Button
-              variant="text"
-              color="secondary"
-              className={classes.menuButton}
-            >
-              Ofertas
-            </Button>
-          </NavLink>
+
           <NavLink
             to="/category/proteinas"
             style={{ textDecoration: "none", color: "inherit" }}
@@ -66,15 +54,8 @@ const Navbar = () => {
               PROTEÍNAS
             </Button>
           </NavLink>
-          <NavLink
-            to="/category/shakers"
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <Button
-              variant="text"
-              color="default"
-              className={classes.menuButton}
-            >
+          <NavLink to="/category/shakers" style={{ textDecoration: "none" }}>
+            <Button variant="text" className={classes.menuButton}>
               SHAKERS
             </Button>
           </NavLink>

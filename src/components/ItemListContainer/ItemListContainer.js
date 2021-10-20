@@ -14,7 +14,17 @@ const ItemListContainer = () => {
 
   /*------------Firebase Call------------*/
   useEffect(() => {
-    getProducts(setListProducts, category);
+    getProducts('category', '==', category)
+      .then((products) => {
+        setListProducts(products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    return () => {
+      setListProducts(undefined);
+    };
   }, [category]);
 
   /*--------------------Spinner----------------------------------*/

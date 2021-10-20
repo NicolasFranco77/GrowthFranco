@@ -9,14 +9,19 @@ import { Button, Grid, Typography } from "@material-ui/core";
 
 const ItemDetailContainer = () => {
   const [itemDetail, setItemDetail] = useState(undefined);
-  const { title } = useParams();
+  const { id } = useParams();
   /*-------Material UI-------*/
   const classes = useStyles();
 
   /*------------Firebase Call------------*/
   useEffect(() => {
-    getProductsById(title, setItemDetail);
-  }, [title]);
+    getProductsById(id)
+      .then((product) => setItemDetail(product))
+      .catch((error) => console.log(error));
+    return () => {
+      setItemDetail(undefined);
+    };
+  }, [id]);
 
   /*------Spinner------*/
   if (!itemDetail) {
@@ -46,10 +51,10 @@ const ItemDetailContainer = () => {
   }
 
   return (
-    <main className={classes.content}>
+    <div className={classes.content}>
       <div className={classes.toolbar} />
       <ItemDetail itemDetail={itemDetail} />
-    </main>
+    </div>
   );
 };
 

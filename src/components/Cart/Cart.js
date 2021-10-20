@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { CartContext } from "../../context/CartContext";
-import { Container, Typography, Grid } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import useStyles from "./styles";
 import FilledCart from "./FilledCart";
 import EmptyCart from "./EmptyCart";
