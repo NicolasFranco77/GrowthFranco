@@ -10,7 +10,7 @@ Growth es un ecommerce desarrollado en React Js. Permite al usuario ver producto
 
 - [React JS](https://es.reactjs.org)
 - [Material UI](https://mui.com/)
-- [Firebase](https://firebase.google.com/?hl=es)
+- [Firebase](https://firebase.google.com/)
 
 ## Instalación
 
