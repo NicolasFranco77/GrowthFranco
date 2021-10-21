@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/commerce.png";
-import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import useStyles from "./styles";
 import CartWidget from "./CartWidget";
 
