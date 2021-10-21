@@ -32,35 +32,38 @@ const Navbar = () => {
           <div className={classes.grow} />
 
           {/*------------------------------MENU----------------------------*/}
-          <NavLink to="/" style={{ textDecoration: "none", color: "inherit" }}>
-            <Button
-              variant="text"
-              color="default"
-              className={classes.menuButton}
-            >
-              PRODUCTOS
-            </Button>
-          </NavLink>
 
-          <NavLink
-            to="/category/proteinas"
-            style={{ textDecoration: "none", color: "inherit" }}
+          <Typography
+            component={NavLink}
+            exact
+            to="/"
+            variant="button"
+            className={classes.menuButton}
+            activeClassName={classes.selected}
           >
-            <Button
-              variant="text"
-              color="default"
-              className={classes.menuButton}
-            >
-              PROTEÍNAS
-            </Button>
-          </NavLink>
-          <NavLink to="/category/shakers" style={{ textDecoration: "none" }}>
-            <Button variant="text" className={classes.menuButton}>
-              SHAKERS
-            </Button>
-          </NavLink>
+            PRODUCTOS
+          </Typography>
 
-          <div className={classes.button} />
+          <Typography
+            component={NavLink}
+            to="/category/proteinas"
+            variant="button"
+            className={classes.menuButton}
+            activeClassName={classes.selected}
+          >
+            PROTEÍNAS
+          </Typography>
+
+          <Typography
+            component={NavLink}
+            to="/category/shakers"
+            variant="button"
+            className={classes.menuButton}
+            activeClassName={classes.selected}
+          >
+            SHAKERS
+          </Typography>
+
           <NavLink
             to="/cart"
             style={{ textDecoration: "none", color: "inherit" }}

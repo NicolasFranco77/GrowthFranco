@@ -16,8 +16,14 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     display: "flex",
     textDecoration: "none",
+
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.25rem",
+    },
+
     [theme.breakpoints.down("xs")]: {
-      fontSize: "12px",
+      fontSize: "1rem",
+
       marginRight: theme.spacing(1),
     },
   },
@@ -25,15 +31,22 @@ export default makeStyles((theme) => ({
     marginRight: "10px",
     [theme.breakpoints.down("xs")]: {
       marginRight: theme.spacing(1),
+      marginLeft: theme.spacing(-1),
     },
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    color: "rgba(0, 0, 0, 0.87)",
+    textDecoration: "none",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.875rem",
+    },
     [theme.breakpoints.down("xs")]: {
-      fontSize: "10px",
-      marginRight: theme.spacing(-1.5),
+      fontSize: ".7rem",
+      marginRight: theme.spacing(1),
     },
   },
+
   grow: {
     flexGrow: 1,
   },
@@ -42,5 +55,9 @@ export default makeStyles((theme) => ({
   width: "100%",
   [theme.breakpoints.up("sm")]: {
     width: "auto",
+  },
+  selected: {
+    color: "#e91e63",
+    textDecoration: "none",
   },
 }));
