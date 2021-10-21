@@ -14,19 +14,11 @@ import useStyles from "./styles.js";
 const CartItem = ({ item }) => {
   const classes = useStyles();
 
-  const {
-    removeItem,
-    quantity,
-    changeQuantity,
-    changeNavQuantity,
-    navQuantity,
-  } = useContext(CartContext);
+  const { removeItem } = useContext(CartContext);
 
   /*-----Remove Button -----*/
   const handleOnClick = () => {
     removeItem(item.id);
-    changeQuantity(quantity - item.quantity);
-    changeNavQuantity(navQuantity - item.quantity);
   };
 
   return (

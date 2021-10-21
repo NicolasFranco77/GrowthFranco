@@ -12,6 +12,7 @@ import {
 import Alert from "@material-ui/lab/Alert";
 
 const ItemDetail = ({ itemDetail }) => {
+  const [quantity, setQuantity] = useState(0)
   const [cart, setCart] = useState(true);
   const [notification, setNotification] = useState(false);
 
@@ -60,6 +61,7 @@ const ItemDetail = ({ itemDetail }) => {
                 item={itemDetail}
                 initial={0}
                 onAdd={handleOnAdd}
+                setQuantity={setQuantity}
               />
             </CardActions>
           ) : (

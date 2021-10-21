@@ -4,16 +4,16 @@ import { CartContext } from "../../context/CartContext";
 import { Button, Typography } from "@material-ui/core";
 import useStyles from "./styles.js";
 
-const ItemCount = ({ stock, initial, onAdd, item, setNotification }) => {
+const ItemCount = ({
+  stock,
+  initial,
+  onAdd,
+  item,
+  setNotification,
+  setQuantity,
+}) => {
   const [count, setCount] = useState(initial);
-  const {
-    quantity,
-    isInCart,
-    addItem,
-    changeQuantity,
-    getProduct,
-    changeNavQuantity,
-  } = useContext(CartContext);
+  const { isInCart, addItem, getProduct } = useContext(CartContext);
   /*-------Material UI-------*/
   const classes = useStyles();
 
@@ -26,13 +26,12 @@ const ItemCount = ({ stock, initial, onAdd, item, setNotification }) => {
     return () => {
       setCount(0);
     };
-  }, [item]);
+  }, [item, getProduct, isInCart]);
 
   /*-----Count +1-----*/
   const add = () => {
     if (count < stock) {
       setCount(count + 1);
-      changeQuantity(quantity + 1);
     }
   };
 
@@ -40,7 +39,6 @@ const ItemCount = ({ stock, initial, onAdd, item, setNotification }) => {
   const subtract = () => {
     if (count > initial) {
       setCount(count - 1);
-      changeQuantity(quantity - 1);
     }
   };
 
@@ -49,8 +47,7 @@ const ItemCount = ({ stock, initial, onAdd, item, setNotification }) => {
     if (count) {
       setNotification(false);
       addItem(item, count);
-      changeQuantity(quantity);
-      changeNavQuantity(quantity);
+      setQuantity(count);
       onAdd();
     } else {
       setNotification(true);

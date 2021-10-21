@@ -4,9 +4,15 @@ export const CartContext = createContext();
 
 export const CartContextProvider = ({ children }) => {
   const [productsCart, setProductsCart] = useState([]);
-  const [quantity, setQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [navQuantity, setNavQuantity] = useState();
+
+  const getQuantity = () => {
+    let quantity = 0;
+    productsCart.forEach((prod) => {
+      quantity = quantity + prod.quantity;
+    });
+    return quantity;
+  };
 
   const getProduct = (id) => {
     return productsCart.find((prod) => prod.id === id);
@@ -32,18 +38,8 @@ export const CartContextProvider = ({ children }) => {
     setProductsCart(newList);
   };
 
-  const changeQuantity = (count) => {
-    setQuantity(count);
-  };
-
-  const changeNavQuantity = (count) => {
-    setNavQuantity(count);
-  };
-
   const clear = () => {
     setProductsCart([]);
-    setQuantity(0);
-    setNavQuantity(0);
   };
 
   const addItem = (item, quantity) => {
@@ -76,16 +72,13 @@ export const CartContextProvider = ({ children }) => {
         addItem,
         productsCart,
         clear,
-        changeQuantity,
-        quantity,
+        getQuantity,
         removeItem,
         setProductsCart,
         isInCart,
         getPrice,
         totalPrice,
         getProduct,
-        changeNavQuantity,
-        navQuantity,
       }}
     >
       {children}
