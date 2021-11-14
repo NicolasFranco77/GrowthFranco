@@ -7,14 +7,14 @@ import useStyles from "./styles";
 import { getProducts } from "../../services/firebase/firebase";
 
 const ItemListContainer = () => {
-  const [listProducts, setListProducts] = useState(undefined);
+  const [listProducts, setListProducts] = useState();
   const { category } = useParams();
   /*-------Material UI-------*/
   const classes = useStyles();
 
   /*------------Firebase Call------------*/
   useEffect(() => {
-    getProducts('category', '==', category)
+    getProducts("category", "==", category)
       .then((products) => {
         setListProducts(products);
       })
@@ -28,7 +28,7 @@ const ItemListContainer = () => {
   }, [category]);
 
   /*--------------------Spinner----------------------------------*/
-  if (listProducts?.length === 0 || listProducts === undefined) {
+  if (!listProducts || listProducts?.length === 0) {
     return <Spinner />;
   }
 

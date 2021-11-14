@@ -8,7 +8,7 @@ import useStyles from "./styles";
 import { Button, Grid, Typography } from "@material-ui/core";
 
 const ItemDetailContainer = () => {
-  const [itemDetail, setItemDetail] = useState(undefined);
+  const [itemDetail, setItemDetail] = useState();
   const { id } = useParams();
   /*-------Material UI-------*/
   const classes = useStyles();
