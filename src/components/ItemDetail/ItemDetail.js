@@ -7,12 +7,12 @@ import {
   Grid,
   CardContent,
   CardActions,
-  Typography,Box
+  Typography,
+  Box,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
 const ItemDetail = ({ itemDetail }) => {
-  const [quantity, setQuantity] = useState(0)
   const [cart, setCart] = useState(true);
   const [notification, setNotification] = useState(false);
 
@@ -61,7 +61,6 @@ const ItemDetail = ({ itemDetail }) => {
                 item={itemDetail}
                 initial={0}
                 onAdd={handleOnAdd}
-                setQuantity={setQuantity}
               />
             </CardActions>
           ) : (
@@ -74,7 +73,7 @@ const ItemDetail = ({ itemDetail }) => {
           {/*-----Out of stock-----*/}
           {itemDetail.stock === 0 && (
             <Box mt={1}>
-            <Alert severity="error">Producto Agotado</Alert>
+              <Alert severity="error">Producto Agotado</Alert>
             </Box>
           )}
         </Card>
