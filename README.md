@@ -2,7 +2,7 @@
 
 Growth es un ecommerce desarrollado en React Js. Permite al usuario ver productos, filtrarlos por categoría, acceder a su descripción, agregarlos al carrito y luego hacer el checkout.
 
-### [Live Site](https://hungry-jepsen-2ad5c3.netlify.app/)
+### [Live Site](https://quizzical-kilby-8a8c9f.netlify.app/)
 
 ![Navegacion](https://i.ibb.co/S6z1f0S/gifnav.gif)
 
